@@ -46,7 +46,8 @@ var SplashScreen = (function (_React$Component) {
     key: 'defaultProps',
     value: {
       //timeout: 10 * 60 * 1000
-      timeout: 10 * 1000
+      timeout: 10 * 1000,
+      enabled: true
     },
     enumerable: true
   }]);
@@ -61,32 +62,60 @@ var SplashScreen = (function (_React$Component) {
   }
 
   _createClass(SplashScreen, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'createTimer',
+    value: function createTimer() {
       var _this = this;
 
       this.idleTimer = (0, _away2['default'])(this.props.timeout, { idle: this.state.idle });
 
       this.idleTimer.on('idle', (function () {
-        console.log('idle');
+        console.log('SplashScreen: idle');
         _this.setState({ idle: true });
       }).bind(this));
 
       this.idleTimer.on('active', (function () {
-        console.log('active');
+        console.log('SplashScreen: active');
         _this.setState({ idle: false });
       }).bind(this));
     }
   }, {
+    key: 'destroyTimer',
+    value: function destroyTimer() {
+      this.idleTimer.stop();
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.props.enabled) {
+        this.createTimer();
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.enabled && !this.props.enabled) {
+        this.createtimer();
+      } else if (!nextProps.enabled && this.props.enabled) {
+        this.destroyTimer();
+      }
+    }
+  }, {
+    key: 'componentWillUnMount',
+    value: function componentWillUnMount() {
+      this.destroyTimer();
+    }
+  }, {
     key: 'render',
     value: function render() {
-      //if (this.state.idle)
-
-      return _react2['default'].createElement(
-        'div',
-        { style: styles.container },
-        this.props.children
-      );
+      if (!this.props.enabled || !this.state.idle) {
+        return null;
+      } else {
+        return _react2['default'].createElement(
+          'div',
+          { style: styles.container },
+          this.props.children
+        );
+      }
     }
   }]);
 
