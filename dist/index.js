@@ -25,10 +25,15 @@ var _away2 = _interopRequireDefault(_away);
 var styles = {
   container: {
     position: 'absolute',
-    width: '100%',
-    height: '100%',
-    zIndex: 10000,
-    backgroundColor: 'green'
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vw',
+    color: 'white',
+    overflow: 'hidden',
+    zIndex: 66666,
+    backgroundColor: 'rgba(255,102,255,.51)',
+    background: 'rgba(100,100,100,1)'
   }
 };
 
@@ -39,18 +44,24 @@ var SplashScreen = (function (_React$Component) {
     key: 'propTypes',
     value: {
       enabled: _react2['default'].PropTypes.bool,
-      timeout: _react2['default'].PropTypes.number
+      timeout: _react2['default'].PropTypes.number,
+      onIdle: _react2['default'].PropTypes.func,
+      onActive: _react2['default'].PropTypes.func
     },
     enumerable: true
   }, {
     key: 'defaultProps',
+    //events: React.PropTypes.string,
     value: {
-      //timeout: 10 * 60 * 1000
-      timeout: 10 * 1000,
-      enabled: true
+      timeout: 10 * 60 * 1000,
+      enabled: true,
+      onActive: function onActive() {},
+      onIdle: function onIdle() {}
     },
     enumerable: true
   }]);
+
+  //events: 'mousemove keydown DOMMouseScroll mousewheel mousedown touchstart touchmove'
 
   function SplashScreen(props) {
     _classCallCheck(this, SplashScreen);
@@ -66,15 +77,20 @@ var SplashScreen = (function (_React$Component) {
     value: function createTimer() {
       var _this = this;
 
-      this.idleTimer = (0, _away2['default'])(this.props.timeout, { idle: this.state.idle });
+      this.idleTimer = (0, _away2['default'])({
+        timeout: this.props.timeout,
+        idle: this.state.idle
+      });
 
       this.idleTimer.on('idle', (function () {
-        console.log('SplashScreen: idle');
+        //console.log('SplashScreen: idle');
+        _this.props.onIdle();
         _this.setState({ idle: true });
       }).bind(this));
 
       this.idleTimer.on('active', (function () {
-        console.log('SplashScreen: active');
+        //console.log('SplashScreen: active');
+        _this.props.onActive();
         _this.setState({ idle: false });
       }).bind(this));
     }
