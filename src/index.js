@@ -7,7 +7,7 @@ const styles = {
     top: 0,
     left: 0,
     width: '100vw',
-    height: '100vw',
+    height: '100vh',
     color: 'white',
     overflow: 'hidden',
     zIndex: 66666,
@@ -42,7 +42,7 @@ export default class SplashScreen extends React.Component {
 
   createTimer() {
     this.idleTimer = away({
-      timeout: this.props.timeout, 
+      timeout: this.props.timeout,
       idle: this.state.idle
     });
 
@@ -60,21 +60,21 @@ export default class SplashScreen extends React.Component {
   }
 
   destroyTimer() {
-    this.idleTimer.stop(); 
+    this.idleTimer.stop();
   }
 
   componentDidMount() {
     if (this.props.enabled) {
-      this.createTimer(); 
+      this.createTimer();
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.enabled && !this.props.enabled) {
-      this.createtimer(); 
+      this.createtimer();
     } else if (!nextProps.enabled && this.props.enabled) {
-      this.destroyTimer(); 
-    } 
+      this.destroyTimer();
+    }
   }
 
   componentWillUnMount() {
@@ -84,7 +84,7 @@ export default class SplashScreen extends React.Component {
   render() {
     if (!this.props.enabled || !this.state.idle) {
       return null;
-    } else { 
+    } else {
       return (
         <div style={styles.container}>
           {this.props.children}
