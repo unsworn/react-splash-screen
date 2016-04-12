@@ -86,7 +86,7 @@ export default class SplashScreen extends React.Component {
       return null;
     } else {
       return (
-        <div style={styles.container}>
+        <div className="splashscreen" style={styles.container}>
           {this.props.children}
         </div>
       );
