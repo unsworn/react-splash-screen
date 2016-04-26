@@ -1,7 +1,7 @@
 {
   "name": "react-splash-screen",
-  "version": "0.0.1",
-  "description": "Simple splash screen component ",
+  "version": "0.0.3",
+  "description": "Simple splash screen component with idle timer",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist --modules common --stage 0",

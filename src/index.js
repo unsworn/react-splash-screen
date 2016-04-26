@@ -7,7 +7,7 @@ const styles = {
     top: 0,
     left: 0,
     width: '100vw',
-    height: '100vw',
+    height: '100vh',
     color: 'white',
     overflow: 'hidden',
     zIndex: 66666,
